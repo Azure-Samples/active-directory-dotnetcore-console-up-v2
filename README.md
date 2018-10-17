@@ -3,7 +3,7 @@ services: active-directory
 author: jmprieur
 platforms: dotnet
 level: 200
-client: .NET console app
+client: .NET Core 2.1 console app
 service: Microsoft Graph
 endpoint: AAD V2
 ---
