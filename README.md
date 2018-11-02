@@ -5,9 +5,9 @@ platforms: dotnet
 level: 200
 client: .NET Core 2.1 console app
 service: Microsoft Graph
-endpoint: AAD V2
+endpoint: AAD v2.0
 ---
-# Invoking an API protected by Azure AD with Username/Password
+# .NET Core Console application letting users sign-in with Username/password to call Microsoft Graph API
 
 [![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnetcore-console-up-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=693)
 
@@ -61,15 +61,17 @@ To run this sample, you'll need:
 - [Visual Studio 2017](https://aka.ms/vsdownload) or just the [.NET Core SDK](https://www.microsoft.com/net/learn/get-started)
 - An Internet connection
 - A Windows machine (necessary if you want to run the app on Windows)
-- An OS X machine (necessary if you want to run the app on OSX)
-- A Linux machine (necessary if you want to run the app on OSX)
-- An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, please see [How to get an Azure AD tenant](https://azure.microsoft.com/en-us/documentation/articles/active-directory-howto-tenant/)
-- A user account in your Azure AD tenant. This sample will not work with a Microsoft account. If you signed in to the Azure portal with a Microsoft account (previously named live account) and have never created a user account in your directory before, you need to do that now.
+- An OS X machine (necessary if you want to run the app on Mac)
+- A Linux machine (necessary if you want to run the app on Linux)
+- An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/en-us/documentation/articles/active-directory-howto-tenant/)
+- A user account in your Azure AD tenant. This sample will not work with a Microsoft account (formerly Windows Live account). Therefore, if you signed in to the [Azure portal](https://portal.azure.com) with a Microsoft account and have never created a user account in your directory before, you need to do that now.
 
 ### Step 1: Clone or download this repository
 
+From your shell or command line:
+
 ```Shell
-git clone https://github.com/Azure-Samples/active-directory-dotnet-iwa-v2.git
+git clone https://github.com/Azure-Samples/active-directory-dotnetcore-console-up-v2.git`
 ```
 
 or download and exact the repository .zip file.
@@ -101,16 +103,29 @@ As a first step you'll need to:
 > In the next steps, you might need the tenant name (or directory name) or the tenant ID (or directory ID). These are presented in the **Properties**
 of the Azure Active Directory window respectively as *Name* and *Directory ID*
 
-#### Register the client app (active-directory-dotnet-iwa)
+#### Register the client app (up-console)
 
-1. In the  **Azure Active Directory** pane, click on **App registrations** and choose **New application registration**.
-1. Enter a friendly name for the application, for example 'active-directory-dotnet-iwa' and select 'Native' as the *Application Type*.
-1. For the *Redirect URI*, enter `https://<your_tenant_name>/active-directory-dotnetcore-up`, replacing `<your_tenant_name>` with the name of your Azure AD tenant.
-1. Click **Create** to create the application.
-1. In the succeeding page, Find the *Application ID* value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
-1. Then click on **Settings**, and choose **Properties**.
-1. Configure Permissions for your application. To that extent, in the Settings menu, choose the 'Required permissions' section and then,
-   click on **Add**, then **Select an API**, and type `Microsoft Graph` in the textbox. Then, click on  **Select Permissions** and select **User.ReadBasic.All**.
+1. In **App registrations (Preview)** page, select **New registration**.
+1. When the **Register an application page** appears, enter your application's registration information:
+   - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `up-console`.
+   - In the **Supported account types** section, select **Accounts in any organizational directory**.
+   - Select **Register** to create the application.
+1. On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
+1. In the list of pages for the app, select **Manifest**, and:
+   - In the manifest editor, set the ``allowPublicClient`` property to **true** 
+   - Select **Save** in the bar above the manifest editor.
+1. In the list of pages for the app, select **API permissions**
+   - Click the **Add a permission** button and then,
+   - Ensure that the **Microsoft APIs** tab is selected
+   - In the *Commonly used Microsoft APIs* section, click on **Microsoft Graph**
+   - In the **Delegated permissions** section, ensure that the right permissions are checked: **User.Read**, **User.ReadBasic.All**. Use the search box if necessary.
+   - Select the **Add permissions** button
+
+1. At this stage permissions are assigned correctly but the client app does not allow interaction. 
+   Therefore no consent can be presented via a UI and accepted to use the service app. 
+   Click the **Grant/revoke admin consent for {tenant}** button, and then select **Yes** when you are asked if you want to grant consent for the
+   requested permissions for all account in the tenant.
+   You need to be an Azure AD tenant admin to do this.
 
 #### Configure the sample to use your Azure AD tenant
 
@@ -121,8 +136,8 @@ Open the solution in Visual Studio to configure the projects
 #### Configure the client project
 
 1. Open the `up-console\appsettings.json` file
-1. Find the line where `Tenant` is set and replace the existing value with your tenant ID.
 1. Find the line where `clientId` is set and replace the existing value with the application ID (clientId) of the `active-directory-dotnet-up` application copied from the Azure portal.
+1. (Optionally) Find the line where `Tenant` is set and replace the existing value with your tenant ID.
 
 ## Community Help and Support
 
@@ -141,6 +156,12 @@ If you'd like to contribute to this sample, see [CONTRIBUTING.MD](/CONTRIBUTING.
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 ## More information
+
+For more information about the app registration:
+
+- [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
+- [Quickstart: Configure a client application to access web APIs (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
+
 
 For more information, see MSAL.NET's conceptual documentation:
 
