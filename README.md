@@ -17,7 +17,7 @@ endpoint: AAD v2.0
 
 This sample demonstrates how to use MSAL.NET to:
 
-- authenticate the user silently using username and password
+- authenticate the user silently using username and password. [Resource owner password credentials](https://tools.ietf.org/html/rfc6749#section-1.3.3)
 - and call to a web API (in this case, the [Microsoft Graph](https://graph.microsoft.com))
 
 ![Topology](./ReadmeFiles/Topology.png)
@@ -26,18 +26,28 @@ If you would like to get started immediately, skip this section and jump to *How
 
 ### Scenario
 
-The application obtains tokens through username and passwords, and then call the Microsoft Graph to get information about the user who signed-in and their manager.
+The application obtains token through username and password, and then calls the Microsoft Graph to get information about the signed-in user and their manager.
 
 Note that Username/Password is needed in some cases (for instance devops scenarios) but it's not recommanded because:
 
-- This requires having credentials in the application, which does not happen with the other flows
-- This won't work for organizations that require conditional access, in particular multi-factor authentication.
+- This requires having credentials in the application, which does not happen with the other flows.
+- The credentials should only be used when there is a high degree of trust between the resource owner and the client and when other authorization grant types are not
+   available (such as an authorization code).
+- Do note that this attempts to authenticate and obtain tokens for users using this flow will often fail with applications registered with Azure AD. Some of the situations and scenarios that will cause the failure are listed below  
+  - When the user needs to consent to permissions that this application is requesting. 
+  - When a conditional access policy enforcing multi-factor authentication is in force.
+  - Azure AD Identity Protection can block authentication attempts if this user account is compromised.
+  - The user's pasword is expired and requires a reset.
 
-Even if this flow seems simpler than the others, it's not. The error handling in particular is particularly complex (described in the sample)
+while this flow seems simpler than the others, applications using these flows often encounter more problems as compared to other flows like authorization code grant. The error handling is also quiet complex (detailed in the sample)
+
+The modern authentication protocols (SAML, WS-Fed, OAuth and OpenID), in principal, discourages apps from handling user credentials themselves. The aim is to decouple the authentication method from an app. Azure AD controls the login experience to avoid exposing secrets (like passwords) to a website or an app.
+
+This enables IdPs like Azure AD to provide seamless single sign-on experiences, enable users to authenticate using factors other than passwords (phone, face, biometrics) and Azure AD can block or elevate authentication attempts if it discerns that the user’s account is compromised or the user is trying to access an app from an untrusted location and such.
 
 ## About the code
 
-The code for handling the token acquisition process is simple, as it boils down to calling the `AcquireTokenByUsernamePasswordAsync` method of `PublicClientApplication`. See the `GetTokenForWebApiUsingUsernamePasswordAsync` method in `PublicAppUsingUsernamePassword.cs`.
+The code for handling the token acquisition process is simple, as it boils down to calling the `AcquireTokenByUsernamePasswordAsync` method of `PublicClientApplication` class. See the `GetTokenForWebApiUsingUsernamePasswordAsync` method in `PublicAppUsingUsernamePassword.cs`.
 
 ```CSharp
 private async Task<AuthenticationResult> GetTokenForWebApiUsingUsernamePasswordAsync(IEnumerable<string> scopes, string username, SecureString password)
@@ -88,8 +98,8 @@ When you run the sample, if you are running on a domain joined or AAD joined Win
 
 ### Optional: configure the sample as an app in your directory tenant
 
-The instructions so far used the Azure AD entry for the app in a Microsoft test tenant: given that the app is multitenant, anybody can run the sample against that app entry.
-To register your project in your own Azure AD tenant, you can find instructions to manually provision the sample in your own tenant, so that you can exercise complete control on the app settings and behavior.
+The instructions so far used the sample is for an app in a Microsoft test tenant: given that the app is multi-tenant, anybody can run the sample against this app entry.
+To register your project in your own Azure AD tenant, follow the instructions to manually register the app in your own tenant, so that you can exercise complete control on the app settings and behavior.
 
 #### First step: choose the Azure AD tenant where you want to create your applications
 
@@ -112,7 +122,7 @@ of the Azure Active Directory window respectively as *Name* and *Directory ID*
    - Select **Register** to create the application.
 1. On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
 1. In the list of pages for the app, select **Manifest**, and:
-   - In the manifest editor, set the ``allowPublicClient`` property to **true** 
+   - In the manifest editor, set the ``allowPublicClient`` property to **true**
    - Select **Save** in the bar above the manifest editor.
 1. In the list of pages for the app, select **API permissions**
    - Click the **Add a permission** button and then,
@@ -121,9 +131,8 @@ of the Azure Active Directory window respectively as *Name* and *Directory ID*
    - In the **Delegated permissions** section, ensure that the right permissions are checked: **User.Read**, **User.ReadBasic.All**. Use the search box if necessary.
    - Select the **Add permissions** button
 
-1. At this stage permissions are assigned correctly but the client app does not allow interaction. 
-   Therefore no consent can be presented via a UI and accepted to use the service app. 
-   Click the **Grant/revoke admin consent for {tenant}** button, and then select **Yes** when you are asked if you want to grant consent for the
+1. At this stage permissions are assigned correctly but this client app is not capable of user interaction to provide consent to the permissions this app requires.
+   To overcome this limitation click the **Grant/revoke admin consent for {tenant}** button, and then select **Yes** when you are asked if you want to grant consent for the
    requested permissions for all account in the tenant.
    You need to be an Azure AD tenant admin to do this.
 
@@ -161,7 +170,6 @@ For more information about the app registration:
 
 - [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
 - [Quickstart: Configure a client application to access web APIs (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
-
 
 For more information, see MSAL.NET's conceptual documentation:
 

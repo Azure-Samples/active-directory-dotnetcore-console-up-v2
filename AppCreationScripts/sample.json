@@ -1,6 +1,6 @@
 {
   "Sample": {
-    "Title": ".NET Core Console application letting users sign-in with Username/password to call Microsoft Graph API",
+    "Title": ".NET Core Console application letting users sign-in with a Username/password and call Microsoft Graph API",
     "Level": 200,
     "Client": ".NET Core (Console)",
     "Service": "Microsoft Graph",
@@ -14,7 +14,7 @@
   "AADApps": [
     {
       "Id": "client",
-      "Name": "up-console",
+      "Name": "active-directory-dotnetcore-console-up-v2",
       "Kind": "Desktop",
       "UsesROPCOrIWA": true,
       "Audience": "AzureADMultipleOrgs",
