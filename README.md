@@ -17,7 +17,7 @@ endpoint: AAD v2.0
 
 This sample demonstrates how to use MSAL.NET to:
 
-- authenticate the user silently using username and password. [Resource owner password credentials](https://tools.ietf.org/html/rfc6749#section-1.3.3)
+- authenticate the user silently using username and password.
 - and call to a web API (in this case, the [Microsoft Graph](https://graph.microsoft.com))
 
 ![Topology](./ReadmeFiles/Topology.png)
@@ -26,7 +26,7 @@ If you would like to get started immediately, skip this section and jump to *How
 
 ### Scenario
 
-The application obtains token through username and password, and then calls the Microsoft Graph to get information about the signed-in user and their manager.
+The application obtains a token through username and password, and then calls the Microsoft Graph to get information about the signed-in user and their manager.
 
 Note that Username/Password is needed in some cases (for instance devops scenarios) but it's not recommanded because:
 
@@ -174,6 +174,7 @@ For more information about the app registration:
 For more information, see MSAL.NET's conceptual documentation:
 
 - [Username/password](https://aka.ms/msal-net-up)
+- [Resource owner password credentials](https://tools.ietf.org/html/rfc6749#section-1.3.3)
 - [Customizing Token cache serialization](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/token-cache-serialization) (was not done in this sample, but you might want to add a serialized cache)
 
 For more information about the Azure AD v2.0 endpoint see:

@@ -14,7 +14,7 @@
   "AADApps": [
     {
       "Id": "client",
-      "Name": "active-directory-dotnetcore-console-up-v2",
+      "Name": "up-console",
       "Kind": "Desktop",
       "UsesROPCOrIWA": true,
       "Audience": "AzureADMultipleOrgs",

@@ -155,6 +155,7 @@ Function ConfigureApplications
    Write-Host "Creating the AAD application (up-console)"
    $clientAadApplication = New-AzureADApplication -DisplayName "up-console" `
                                                   -ReplyUrls "https://up-console" `
+                                                  -AvailableToOtherTenants $True `
                                                   -PublicClient $True
 
 
