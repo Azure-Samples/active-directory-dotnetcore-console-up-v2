@@ -57,7 +57,7 @@ private async Task<AuthenticationResult> GetTokenForWebApiUsingUsernamePasswordA
  {
   result = await App.AcquireTokenByUsernamePasswordAsync(scopes, username, password);
  }
- catch (MsalUiRequiredException ex) when (ex.Message.Contains("AADSTS65001"))
+ catch (MsalUiRequiredException ex)
  {
    ...
    // error handling omited here (see sample for details)
