@@ -33,7 +33,7 @@ namespace up_console
 {
     /// <summary>
     /// Security token provider using username password.
-    /// Note that using username/password is not recommanded. See https://aka.ms/msal-net-up
+    /// Note that using username/password is not recommended. See https://aka.ms/msal-net-up
     /// </summary>
     public class PublicAppUsingUsernamePassword
     {
@@ -84,7 +84,7 @@ namespace up_console
 
         /// <summary>
         /// Gets an access token so that the application accesses the web api in the name of the user
-        /// who is signed-in in Windows (for a domain joined or AAD joined machine)
+        /// who is signed-in Windows (for a domain joined or AAD joined machine)
         /// </summary>
         /// <returns>An authentication result, or null if the user canceled sign-in</returns>
         private async Task<AuthenticationResult> GetTokenForWebApiUsingUsernamePasswordAsync(IEnumerable<string> scopes, string username, SecureString password)
@@ -122,7 +122,7 @@ namespace up_console
             // Your application cannot use the Username/Password grant. 
             // Like in the previous case, you might want to use an interactive flow (AcquireTokenAsync()), or Device Code Flow instead.
 
-            // Note this is one of the reason why using username/password is not recommanded;
+            // Note this is one of the reason why using username/password is not recommended;
             throw;
         }
         catch (MsalUiRequiredException ex) when (ex.Message.Contains("AADSTS70002") || ex.Message.Contains("AADSTS50126"))
@@ -145,7 +145,7 @@ namespace up_console
         {
             // MsalServiceException: AADSTS90010: The grant type is not supported over the /common or /consumers endpoints. Please use the /organizations or tenant-specific endpoint.
             // you used common.
-            // Mitigation: as explained in the message from Azure AD, the authoriy you use in the application needs to be tenanted or otherwise "organizations". change the 
+            // Mitigation: as explained in the message from Azure AD, the authority you use in the application needs to be tenanted or otherwise "organizations". change the 
             // "Tenant": property in the appsettings.json to be a GUID (tenant Id), or domain name (contoso.com) if such a domain is registered with your tenant
             // or "organizations", if you want this application to sign-in users in any Work and School accounts.
             throw;
@@ -189,7 +189,7 @@ namespace up_console
             // ex.Message = "Could not identify the user logged into the OS. See http://aka.ms/msal-net-iwa for details."
             throw new ArgumentException("U/P: Wrong username", ex);
         }
-        catch (MsalClientException ex)
+        catch (MsalClientException)
         {
             // Other client exception
             throw;
