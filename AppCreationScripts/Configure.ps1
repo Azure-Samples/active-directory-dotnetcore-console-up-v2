@@ -154,18 +154,21 @@ Function ConfigureApplications
    # Create the client AAD application
    Write-Host "Creating the AAD application (up-console)"
    $clientAadApplication = New-AzureADApplication -DisplayName "up-console" `
-                                                  -ReplyUrls "https://up-console" `
+                                                  -ReplyUrls "urn:ietf:wg:oauth:2.0:oob" `
                                                   -AvailableToOtherTenants $True `
                                                   -PublicClient $True
-
 
    $currentAppId = $clientAadApplication.AppId
    $clientServicePrincipal = New-AzureADServicePrincipal -AppId $currentAppId -Tags {WindowsAzureActiveDirectoryIntegratedApp}
 
-    # add the user running the script as an app owner
+   # add the user running the script as an app owner if needed
+   $owner = Get-AzureADApplicationOwner -ObjectId $clientAadApplication.ObjectId
+   if ($owner -eq $null)
+   { 
     Add-AzureADApplicationOwner -ObjectId $clientAadApplication.ObjectId -RefObjectId $user.ObjectId
     Write-Host "'$($user.UserPrincipalName)' added as an application owner to app '$($clientServicePrincipal.DisplayName)'"
-      
+   }
+
    Write-Host "Done creating the client application (up-console)"
 
    # URL of the AAD application in the Azure portal
