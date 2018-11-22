@@ -86,32 +86,33 @@ git clone https://github.com/Azure-Samples/active-directory-dotnetcore-console-u
 
 or download and exact the repository .zip file.
 
-> Given that the name of the sample is pretty long, and so are the name of the referenced NuGet pacakges, you might want to clone it in a folder close to the root of your hard drive, to avoid file size limitations on Windows.
-
-### Step 2: Run the sample
-
-Open the solution in Visual Studio, restore the NuGet packages, select the project, and start it in the debugger.
+> Given that the name of the sample is pretty long, and so are the name of the referenced NuGet packages, you might want to clone it in a folder close to the root of your hard drive, to avoid file size limitations on Windows.
 
 #### Operating the sample
 
 When you run the sample, if you are running on a domain joined or AAD joined Windows machine, it will display your information as well as the information about your manager.
 
-### Optional: configure the sample as an app in your directory tenant
+### Step 2: (Optional) Register the sample with your Azure Active Directory tenant
 
 The instructions so far used the sample is for an app in a Microsoft test tenant: given that the app is multi-tenant, anybody can run the sample against this app entry.
-To register your project in your own Azure AD tenant, follow the instructions to manually register the app in your own tenant, so that you can exercise complete control on the app settings and behavior.
 
-#### First step: choose the Azure AD tenant where you want to create your applications
+There is one project in this sample. To register it, you can:
+
+- either follow the steps in the paragraphs below ([Step 2](#step-2--register-the-sample-with-your-azure-active-directory-tenant) and [Step 3](#step-3--configure-the-sample-to-use-your-azure-ad-tenant))
+- or use PowerShell scripts that:
+  - **automatically** create for you the Azure AD applications and related objects (passwords, permissions, dependencies)
+  - modify the Visual Studio projects' configuration files.
+
+If you want to use this automation, read the instructions in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
+
+#### Choose the Azure AD tenant where you want to create your applications
 
 As a first step you'll need to:
 
-1. Sign in to the [Azure portal](https://portal.azure.com).
-1. On the top bar, click on your account, and then on **Switch Directory**.
-1. Once the *Directory + subscription* pane opens, choose the Active Directory tenant where you wish to register your application, from the *Favorites* or *All Directories* list.
-1. Click on **All services** in the left-hand nav, and choose **Azure Active Directory**.
-
-> In the next steps, you might need the tenant name (or directory name) or the tenant ID (or directory ID). These are presented in the **Properties**
-of the Azure Active Directory window respectively as *Name* and *Directory ID*
+1. Sign in to the [Azure portal](https://portal.azure.com) using either a work or school account or a personal Microsoft account.
+1. If your account gives you access to more than one tenant, select your account in the top right corner, and set your portal session to the desired Azure AD tenant
+   (using **Switch Directory**).
+1. In the left-hand navigation pane, select the **Azure Active Directory** service, and then select **App registrations (Preview)**.
 
 #### Register the client app (up-console)
 
@@ -122,7 +123,7 @@ of the Azure Active Directory window respectively as *Name* and *Directory ID*
    - Select **Register** to create the application.
 1. On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
 1. In the list of pages for the app, select **Manifest**, and:
-   - In the manifest editor, set the ``allowPublicClient`` property to **true**
+   - In the manifest editor, set the ``allowPublicClient`` property to **true** 
    - Select **Save** in the bar above the manifest editor.
 1. In the list of pages for the app, select **API permissions**
    - Click the **Add a permission** button and then,
@@ -131,26 +132,32 @@ of the Azure Active Directory window respectively as *Name* and *Directory ID*
    - In the **Delegated permissions** section, ensure that the right permissions are checked: **User.Read**, **User.ReadBasic.All**. Use the search box if necessary.
    - Select the **Add permissions** button
 
-1. At this stage permissions are assigned correctly but this client app is not capable of user interaction to provide consent to the permissions this app requires.
-   To overcome this limitation click the **Grant/revoke admin consent for {tenant}** button, and then select **Yes** when you are asked if you want to grant consent for the
+1. At this stage permissions are assigned correctly but the client app does not allow interaction. 
+   Therefore no consent can be presented via a UI and accepted to use the service app. 
+   Click the **Grant/revoke admin consent for {tenant}** button, and then select **Yes** when you are asked if you want to grant consent for the
    requested permissions for all account in the tenant.
    You need to be an Azure AD tenant admin to do this.
 
-#### Configure the sample to use your Azure AD tenant
+### Step 3:  Configure the sample to use your Azure AD tenant
 
-In the steps below, ClientID is the same as Application ID or AppId.
+In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 
 Open the solution in Visual Studio to configure the projects
 
 #### Configure the client project
 
 1. Open the `up-console\appsettings.json` file
-1. Find the line where `clientId` is set and replace the existing value with the application ID (clientId) of the `active-directory-dotnet-up` application copied from the Azure portal.
+1. Find the app key `ClientId` and replace the existing value with the application ID (clientId) of the `up-console` application copied from the Azure portal.
 1. (Optionally) Find the line where `Tenant` is set and replace the existing value with your tenant ID.
+
+### Step 4: Run the sample
+
+Clean the solution, rebuild the solution, and start it in the debugger.
+
 
 ## Community Help and Support
 
-Use [Stack Overflow](http://stackoverflow.com/questions/tagged/adal) to get support from the community.
+Use [Stack Overflow](http://stackoverflow.com/questions/tagged/msal) to get support from the community.
 Ask your questions on Stack Overflow first and browse existing issues to see if someone has asked your question before.
 Make sure that your questions or comments are tagged with [`msal` `dotnet`].
 

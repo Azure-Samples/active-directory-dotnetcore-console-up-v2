@@ -162,15 +162,15 @@ Function ConfigureApplications
    $currentAppId = $clientAadApplication.AppId
    $clientServicePrincipal = New-AzureADServicePrincipal -AppId $currentAppId -Tags {WindowsAzureActiveDirectoryIntegratedApp}
 
-   # add the user running the script as an app owner
-   Add-AzureADApplicationOwner -ObjectId $clientAadApplication.ObjectId -RefObjectId $user.ObjectId
-   Write-Host "'$($user.UserPrincipalName)' added as an application owner to app '$($clientServicePrincipal.DisplayName)'"
-
+    # add the user running the script as an app owner
+    Add-AzureADApplicationOwner -ObjectId $clientAadApplication.ObjectId -RefObjectId $user.ObjectId
+    Write-Host "'$($user.UserPrincipalName)' added as an application owner to app '$($clientServicePrincipal.DisplayName)'"
+      
    Write-Host "Done creating the client application (up-console)"
 
    # URL of the AAD application in the Azure portal
    # Future? $clientPortalUrl = "https://portal.azure.com/#@"+$tenantName+"/blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/"+$clientAadApplication.AppId+"/objectId/"+$clientAadApplication.ObjectId+"/isMSAApp/"
-   $clientPortalUrl = "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Authentication/appId/"+$clientAadApplication.AppId+"/objectId/"+$clientAadApplication.ObjectId+"/isMSAApp/"
+   $clientPortalUrl = "https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/CallAnAPI/appId/"+$clientAadApplication.AppId+"/objectId/"+$clientAadApplication.ObjectId+"/isMSAApp/"
    Add-Content -Value "<tr><td>client</td><td>$currentAppId</td><td><a href='$clientPortalUrl'>up-console</a></td></tr>" -Path createdApps.html
 
    $requiredResourcesAccess = New-Object System.Collections.Generic.List[Microsoft.Open.AzureAD.Model.RequiredResourceAccess]
@@ -178,7 +178,8 @@ Function ConfigureApplications
    # Add Required Resources Access (from 'client' to 'Microsoft Graph')
    Write-Host "Getting access from 'client' to 'Microsoft Graph'"
    $requiredPermissions = GetRequiredPermissions -applicationDisplayName "Microsoft Graph" `
-                                                 -requiredDelegatedPermissions "User.Read|User.ReadBasic.All";
+                                                -requiredDelegatedPermissions "User.Read|User.ReadBasic.All";
+
    $requiredResourcesAccess.Add($requiredPermissions)
 
 
@@ -194,7 +195,7 @@ Function ConfigureApplications
    Write-Host "IMPORTANT: Think of completing the following manual step(s) in the Azure portal":
    Write-Host "- For 'client'"
    Write-Host "  - Navigate to '$clientPortalUrl'"
-   Write-Host "  - Navigate to the API persmissions page and click on 'Grant admin consent for {tenant}'"
+   Write-Host "  - Navigate to the API permissions page and click on 'Grant admin consent for {tenant}'"
 
    Add-Content -Value "</tbody></table></body></html>" -Path createdApps.html  
 }
