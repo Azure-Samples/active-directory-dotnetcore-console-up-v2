@@ -77,9 +77,19 @@ namespace up_console
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Failed to call the Web Api: {response.StatusCode}");
                     string content = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Content: {content}");
+
+                    // It's ok for not to have a manager
+                    if (!content.Contains("Resource 'manager' does not exist"))
+                    {
+                        Console.WriteLine($"Failed to call the Web Api: {response.StatusCode}");
+                        Console.WriteLine($"Content: {content}");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.WriteLine("No manager");
+                    }
                 }
                 Console.ResetColor();
             }

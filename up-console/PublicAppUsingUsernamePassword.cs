@@ -100,8 +100,9 @@ namespace up_console
 
                 // ------------------------------------------------------------------------
                 // MsalUiRequiredException: AADSTS65001: The user or administrator has not consented to use the application 
+                // error:invalid_grant
+                // suberror:consent_required
                 // with ID '{appId}' named '{appName}'. Send an interactive authorization request for this user and resource.
-
                 // Mitigation: you need to get user consent first. This can be done either statically (through the portal), or dynamically (but this
                 // requires an interaction with Azure AD, which is not possible with the username/password flow)
                 // Statically: in the portal by doing the following in the "API permissions" tab of the application registration: 
