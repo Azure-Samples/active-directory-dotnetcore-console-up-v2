@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.AppConfig;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -65,8 +65,9 @@ namespace up_console
 
         private static async Task RunAsync()
         {
-            AuthenticationConfig config = AuthenticationConfig.ReadFromJsonFile("appsettings.json");
-            var app = new PublicClientApplication(config.ClientId, config.Authority);
+            PublicClientApplicationOptions config = AuthenticationConfig.ReadFromJsonFile("appsettings.json");
+            var app = PublicClientApplicationBuilder.CreateWithApplicationOptions(config)
+                .Build();
             var httpClient = new HttpClient();
 
             MyInformation myInformation = new MyInformation(app, httpClient);

@@ -45,11 +45,11 @@ namespace up_console
         /// <remarks>
         /// For more information see https://aka.ms/msal-net-up
         /// </remarks>
-        public PublicAppUsingUsernamePassword(PublicClientApplication app)
+        public PublicAppUsingUsernamePassword(IPublicClientApplication app)
         {
             App = app;
         }
-        protected PublicClientApplication App { get; private set; }
+        protected IPublicClientApplication App { get; private set; }
 
         /// <summary>
         /// Acquires a token from the token cache, or Username/password
@@ -65,7 +65,8 @@ namespace up_console
                 try
                 {
                     // Attempt to get a token from the cache (or refresh it silently if needed)
-                    result = await App.AcquireTokenSilentAsync(scopes, accounts.FirstOrDefault());
+                    result = await (App as PublicClientApplication).AcquireTokenSilent(scopes, accounts.FirstOrDefault())
+                        .ExecuteAsync();
                 }
                 catch (MsalUiRequiredException)
                 {
@@ -92,7 +93,8 @@ namespace up_console
             AuthenticationResult result = null;
             try
             {
-                result = await App.AcquireTokenByUsernamePasswordAsync(scopes, username, password);
+                result = await App.AcquireTokenWithUsernamePassword(scopes, username, password)
+                    .ExecuteAsync();
             }
             catch (MsalUiRequiredException ex)
             {
