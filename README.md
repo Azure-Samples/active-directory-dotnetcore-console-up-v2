@@ -181,8 +181,9 @@ For more information about the app registration:
 For more information, see MSAL.NET's conceptual documentation:
 
 - [Username/password](https://aka.ms/msal-net-up)
-- [Resource owner password credentials](https://tools.ietf.org/html/rfc6749#section-1.3.3)
 - [Customizing Token cache serialization](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/token-cache-serialization) (was not done in this sample, but you might want to add a serialized cache)
+- [Azure Active Directory v2.0 and the OAuth 2.0 resource owner password credential](https://review.docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth-ropc) to learn more about the underlying protocol
+- [Resource owner password credentials RFC](https://tools.ietf.org/html/rfc6749#section-1.3.3)
 
 For more information about the Azure AD v2.0 endpoint see:
 
