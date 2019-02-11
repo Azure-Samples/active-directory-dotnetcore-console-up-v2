@@ -34,10 +34,11 @@ namespace up_console
 {
     public class MyInformation
     {
-        public MyInformation(IPublicClientApplication app, HttpClient client)
+        public MyInformation(IPublicClientApplication app, HttpClient client, string microsoftGraphBaseEndpoint)
         {
             tokenAcquisitionHelper = new PublicAppUsingUsernamePassword(app);
             protectedApiCallHelper = new ProtectedApiCallHelper(client);
+            this.MicrosoftGraphBaseEndpoint = microsoftGraphBaseEndpoint;
         }
 
         protected PublicAppUsingUsernamePassword tokenAcquisitionHelper;
@@ -47,13 +48,19 @@ namespace up_console
         /// <summary>
         /// Scopes to request access to the protected Web API (here Microsoft Graph)
         /// </summary>
-        private static string[] Scopes { get; set; } = new string[] { "User.Read", "User.ReadBasic.All"};
+        private static string[] Scopes { get; set; } = new string[] { "User.Read", "User.ReadBasic.All" };
+
+        /// <summary>
+        /// Base endpoint for Microsoft Graph
+        /// </summary>
+        private string MicrosoftGraphBaseEndpoint { get; set; }
 
         /// <summary>
         /// URLs of the protected Web APIs to call (here Microsoft Graph endpoints)
         /// </summary>
-        private static string WebApiUrlMe { get; set; } = "https://graph.microsoft.com/v1.0/me";
-        private static string WebApiUrlMyManager { get; set; } = "https://graph.microsoft.com/v1.0/me/manager";
+        private string WebApiUrlMe { get { return $"{MicrosoftGraphBaseEndpoint}/v1.0/me"; } }
+        private string WebApiUrlMyManager { get { return $"{MicrosoftGraphBaseEndpoint}/v1.0/me/manager"; } }
+
 
         /// <summary>
         /// Calls the Web API and displays its information

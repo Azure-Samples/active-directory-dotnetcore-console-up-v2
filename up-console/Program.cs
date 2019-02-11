@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.AppConfig;
 using System;
 using System.Net.Http;
@@ -40,23 +41,14 @@ namespace up_console
         {
             try
             {
-                RunAsync().Wait();
+                RunAsync().GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                var aggregateException = ex as AggregateException;
-                if (aggregateException !=null)
-                {
-                    foreach(Exception subEx in aggregateException.InnerExceptions)
-                    {
-                        Console.WriteLine(subEx.Message);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(ex.Message);
-                }
+
+                Console.WriteLine(ex.Message);
+
                 Console.ResetColor();
             }
             Console.WriteLine("Press any key to exit");
@@ -65,12 +57,11 @@ namespace up_console
 
         private static async Task RunAsync()
         {
-            PublicClientApplicationOptions config = AuthenticationConfig.ReadFromJsonFile("appsettings.json");
-            var app = PublicClientApplicationBuilder.CreateWithApplicationOptions(config)
-                .Build();
+            SampleConfiguration config = SampleConfiguration.ReadFromJsonFile("appsettings.json");
+            IPublicClientApplication app = PublicClientApplicationBuilder.CreateWithApplicationOptions(config.PublicClientApplicationOptions).Build();
             var httpClient = new HttpClient();
 
-            MyInformation myInformation = new MyInformation(app, httpClient);
+            MyInformation myInformation = new MyInformation(app, httpClient, config.MicrosoftGraphBaseEndpoint);
             await myInformation.DisplayMeAndMyManagerRetryingWhenWrongCredentialsAsync();
         }
     }
