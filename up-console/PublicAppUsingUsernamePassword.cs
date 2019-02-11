@@ -99,6 +99,20 @@ namespace up_console
                 // Here are the kind of error messages you could have, and possible mitigations
 
                 // ------------------------------------------------------------------------
+                // MsalUiRequiredException: 'AADSTS50055: Password is expired.
+                // error:invalid_grant
+                // suberror:user_password_expired
+                // Mitigation: you need to have the user change their password fisrt. This
+                // requires an interaction with Azure AD, which is not possible with the username/password flow)
+                // if you are not using .NET Core (which does not have any Web UI) by calling (once only) AcquireTokenAsync interactive. 
+                // remember that Username/password is for public client applications that is desktop/mobile applications.
+                // If you are using .NET core or don't want to call AcquireTokenAsync, you might want to:
+                // - use device code flow (See https://aka.ms/msal-net-device-code-flow)
+                // - or suggest the user to navigate to a URL to consent: https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id={clientId}&response_type=code&scope=user.read
+                //   where the user will be prompted to change their password
+                // ------------------------------------------------------------------------
+
+                // ------------------------------------------------------------------------
                 // MsalUiRequiredException: AADSTS65001: The user or administrator has not consented to use the application 
                 // error:invalid_grant
                 // suberror:consent_required
