@@ -65,11 +65,11 @@ namespace up_console
 
         private static async Task RunAsync()
         {
-            AuthenticationConfig config = AuthenticationConfig.ReadFromJsonFile("appsettings.json");
+            SampleConfiguration config = SampleConfiguration.ReadFromJsonFile("appsettings.json");
             var app = new PublicClientApplication(config.ClientId, config.Authority);
             var httpClient = new HttpClient();
 
-            MyInformation myInformation = new MyInformation(app, httpClient);
+            MyInformation myInformation = new MyInformation(app, httpClient, config.MicrosoftGraphBaseEndpoint);
             await myInformation.DisplayMeAndMyManagerRetryingWhenWrongCredentialsAsync();
         }
     }
