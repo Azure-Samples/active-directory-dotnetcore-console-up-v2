@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.AppConfig;
 using System;
 using System.Net.Http;
@@ -46,9 +45,7 @@ namespace up_console
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-
                 Console.WriteLine(ex.Message);
-
                 Console.ResetColor();
             }
             Console.WriteLine("Press any key to exit");
@@ -58,7 +55,10 @@ namespace up_console
         private static async Task RunAsync()
         {
             SampleConfiguration config = SampleConfiguration.ReadFromJsonFile("appsettings.json");
-            IPublicClientApplication app = PublicClientApplicationBuilder.CreateWithApplicationOptions(config.PublicClientApplicationOptions).Build();
+            var appConfig = config.PublicClientApplicationOptions;
+            var app = PublicClientApplicationBuilder.CreateWithApplicationOptions(appConfig)
+                                                    .WithAuthority(appConfig.AzureCloudInstance, AadAuthorityAudience.AzureAdMultipleOrgs)  // work around to MSAL.NET bug #969
+                                                    .Build();
             var httpClient = new HttpClient();
 
             MyInformation myInformation = new MyInformation(app, httpClient, config.MicrosoftGraphBaseEndpoint);

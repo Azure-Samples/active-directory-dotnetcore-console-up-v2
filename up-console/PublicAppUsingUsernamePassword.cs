@@ -93,7 +93,7 @@ namespace up_console
             AuthenticationResult result = null;
             try
             {
-                result = await App.AcquireTokenWithUsernamePassword(scopes, username, password)
+                result = await App.AcquireTokenByUsernamePassword(scopes, username, password)
                     .ExecuteAsync();
             }
             catch (MsalUiRequiredException ex)

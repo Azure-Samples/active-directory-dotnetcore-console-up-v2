@@ -27,6 +27,7 @@ using Microsoft.Identity.Client.AppConfig;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 
 namespace up_console
 {
@@ -58,7 +59,7 @@ namespace up_console
             IConfigurationRoot Configuration;
 
             var builder = new ConfigurationBuilder()
-             .SetBasePath(Directory.GetCurrentDirectory())
+             .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
             .AddJsonFile(path);
 
             Configuration = builder.Build();

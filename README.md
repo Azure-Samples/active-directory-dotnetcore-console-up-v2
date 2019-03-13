@@ -81,7 +81,7 @@ To run this sample, you'll need:
 From your shell or command line:
 
 ```Shell
-git clone https://github.com/Azure-Samples/active-directory-dotnetcore-console-up-v2.git`
+git clone https://github.com/Azure-Samples/active-directory-dotnetcore-console-up-v2.git
 ```
 
 or download and exact the repository .zip file.
@@ -98,20 +98,33 @@ The instructions so far used the sample is for an app in a Microsoft test tenant
 
 There is one project in this sample. To register it, you can:
 
-- either follow the steps in the paragraphs below ([Step 2](#step-2--register-the-sample-with-your-azure-active-directory-tenant) and [Step 3](#step-3--configure-the-sample-to-use-your-azure-ad-tenant))
+- either follow the steps [Step 2: Register the sample with your Azure Active Directory tenant](#step-2-register-the-sample-with-your-azure-active-directory-tenant) and [Step 3:  Configure the sample to use your Azure AD tenant](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
 - or use PowerShell scripts that:
-  - **automatically** create for you the Azure AD applications and related objects (passwords, permissions, dependencies)
+  - **automatically** creates the Azure AD applications and related objects (passwords, permissions, dependencies) for you
   - modify the Visual Studio projects' configuration files.
 
-If you want to use this automation, read the instructions in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
+If you want to use this automation:
+1. On Windows run PowerShell and navigate to the root of the cloned directory
+1. In PowerShell run:
+   ```PowerShell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+   ```
+1. Run the script to create your Azure AD application and configure the code of the sample application accordinly. 
+   ```PowerShell
+   .\AppCreationScripts\Configure.ps1
+   ```
+   > Troubleshooting information as well as documentation about other ways of running the scripts is available in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
+
+1. Open the Visual Studio solution and click start
+
+If ou don't want to use this automation, follow the steps below:
 
 #### Choose the Azure AD tenant where you want to create your applications
 
 As a first step you'll need to:
 
 1. Sign in to the [Azure portal](https://portal.azure.com) using either a work or school account or a personal Microsoft account.
-1. If your account gives you access to more than one tenant, select your account in the top right corner, and set your portal session to the desired Azure AD tenant
-   (using **Switch Directory**).
+1. If your account is present in more than one Azure AD tenant, select `Directory + Subscription` at the top right corner in the menu on top of the page, and switch your portal session to the desired Azure AD tenant.   
 1. In the left-hand navigation pane, select the **Azure Active Directory** service, and then select **App registrations (Preview)**.
 
 #### Register the client app (up-console)
@@ -120,7 +133,8 @@ As a first step you'll need to:
 1. When the **Register an application page** appears, enter your application's registration information:
    - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `up-console`.
    - In the **Supported account types** section, select **Accounts in any organizational directory**.
-   - Select **Register** to create the application.
+    > Note that if there are more than one redirect URIs, you'd need to add them from the **Authentication** tab later after the app has been created succesfully. 
+1. Select **Register** to create the application.
 1. On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
 1. In the list of pages for the app, select **Manifest**, and:
    - In the manifest editor, set the ``allowPublicClient`` property to **true** 
@@ -145,6 +159,8 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 Open the solution in Visual Studio to configure the projects
 
 #### Configure the client project
+
+> Note: if you used the setup scripts, the changes below will have been applied for you
 
 1. Open the `up-console\appsettings.json` file
 1. Find the app key `ClientId` and replace the existing value with the application ID (clientId) of the `up-console` application copied from the Azure portal.
@@ -175,16 +191,20 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 For more information about the app registration:
 
+- [Microsoft identity platform (Azure Active Directory) for developers](https://aka.ms/aaddevv2)
 - [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
 - [Quickstart: Configure a client application to access web APIs (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
 
 For more information, see MSAL.NET's conceptual documentation:
 
+- [MSAL.NET's conceptual documentation](https://aka.ms/msal-net)
+- [Customizing Token cache serialization](https://aka.ms/msal-net-token-cache-serialization)
+- [Scenarios](https://aka.ms/msal-net-scenarios)
+- [Acquiring Tokens](https://aka.ms/msal-net-acquiring-tokens)
 - [Username/password](https://aka.ms/msal-net-up)
-- [Customizing Token cache serialization](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/token-cache-serialization) (was not done in this sample, but you might want to add a serialized cache)
 - [Azure Active Directory v2.0 and the OAuth 2.0 resource owner password credential](https://review.docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth-ropc) to learn more about the underlying protocol
 - [Resource owner password credentials RFC](https://tools.ietf.org/html/rfc6749#section-1.3.3)
 
-For more information about the Azure AD v2.0 endpoint see:
+For more information about the Microsoft identity platform (AAD) v2.0 see:
 
-- [https://aka.ms/aadv2](https://aka.ms/aadv2)
+- [Microsoft identity platform (Azure Active Directory) for developers](https://aka.ms/aaddevv2)
