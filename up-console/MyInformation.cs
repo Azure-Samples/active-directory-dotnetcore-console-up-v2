@@ -149,7 +149,7 @@ namespace up_console
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(title);
             Console.ResetColor();
-            await protectedApiCallHelper.CallWebApiAndProcessResultASync(url, accessToken, Display);
+            await protectedApiCallHelper.CallWebApiAndProcessResultAsync(url, accessToken, Display);
             Console.WriteLine();
         }
 
