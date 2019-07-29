@@ -5,7 +5,7 @@ platforms: dotnet
 level: 200
 client: .NET Core 2.1 console app
 service: Microsoft Graph
-endpoint: AAD v2.0
+endpoint: Microsoft identity platform
 ---
 # .NET Core Console application letting users sign-in with Username/password to call Microsoft Graph API
 
@@ -191,9 +191,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 For more information about the app registration:
 
-- [Microsoft identity platform (Azure Active Directory) for developers](https://aka.ms/aaddevv2)
-- [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
-- [Quickstart: Configure a client application to access web APIs (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
+- [Microsoft identity platform](https://aka.ms/aaddevv2)
+- [Quickstart: Register an application with the Microsoft identity platform](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
+- [Quickstart: Configure a client application to access web APIs](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
 
 For more information, see MSAL.NET's conceptual documentation:
 
@@ -202,9 +202,9 @@ For more information, see MSAL.NET's conceptual documentation:
 - [Scenarios](https://aka.ms/msal-net-scenarios)
 - [Acquiring Tokens](https://aka.ms/msal-net-acquiring-tokens)
 - [Username/password](https://aka.ms/msal-net-up)
-- [Azure Active Directory v2.0 and the OAuth 2.0 resource owner password credential](https://review.docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth-ropc) to learn more about the underlying protocol
+- [Microsoft identity platform and the OAuth 2.0 resource owner password credential](https://review.docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth-ropc) to learn more about the underlying protocol
 - [Resource owner password credentials RFC](https://tools.ietf.org/html/rfc6749#section-1.3.3)
 
-For more information about the Microsoft identity platform (AAD) v2.0 see:
+For more information about the Microsoft identity platform see:
 
 - [Microsoft identity platform (Azure Active Directory) for developers](https://aka.ms/aaddevv2)
