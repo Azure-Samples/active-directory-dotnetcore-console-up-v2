@@ -6,6 +6,15 @@ level: 200
 client: .NET Core 2.1 console app
 service: Microsoft Graph
 endpoint: Microsoft identity platform
+page_type: sample
+languages:
+  - csharp  
+products:
+  - azure
+  - azure-active-directory  
+  - dotnet-core
+  - office-ms-graph
+description: "This sample demonstrates how to use MSAL.NET to authenticate the user silently using username and password and call a web API."
 ---
 # .NET Core Console application letting users sign-in with Username/password to call Microsoft Graph API
 
@@ -125,11 +134,11 @@ As a first step you'll need to:
 
 1. Sign in to the [Azure portal](https://portal.azure.com) using either a work or school account or a personal Microsoft account.
 1. If your account is present in more than one Azure AD tenant, select `Directory + Subscription` at the top right corner in the menu on top of the page, and switch your portal session to the desired Azure AD tenant.   
-1. In the left-hand navigation pane, select the **Azure Active Directory** service, and then select **App registrations (Preview)**.
+1. In the left-hand navigation pane, select the **Azure Active Directory** service, and then select **App registrations**.
 
 #### Register the client app (up-console)
 
-1. In **App registrations (Preview)** page, select **New registration**.
+1. In **App registrations** page, select **New registration**.
 1. When the **Register an application page** appears, enter your application's registration information:
    - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `up-console`.
    - In the **Supported account types** section, select **Accounts in any organizational directory**.
@@ -207,4 +216,4 @@ For more information, see MSAL.NET's conceptual documentation:
 
 For more information about the Microsoft identity platform see:
 
-- [Microsoft identity platform (Azure Active Directory) for developers](https://aka.ms/aaddevv2)
+- [Microsoft identity platform](https://aka.ms/aaddevv2)
