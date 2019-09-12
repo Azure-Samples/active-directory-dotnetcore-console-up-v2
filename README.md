@@ -1,21 +1,14 @@
 ---
-services: active-directory
-author: jmprieur
-platforms: dotnet
-level: 200
-client: .NET Core 2.1 console app
-service: Microsoft Graph
-endpoint: Microsoft identity platform
 page_type: sample
 languages:
-  - csharp  
+- csharp
+- powershell
 products:
-  - azure
-  - azure-active-directory  
-  - dotnet-core
-  - office-ms-graph
-description: "This sample demonstrates how to use MSAL.NET to authenticate the user silently using username and password and call a web API."
+- azure
+description: "This sample demonstrates how to use MSAL.NET to authenticate the user silently using username and password and call to a web API (in this case, the Microsoft Graph)"
+urlFragment: active-directory-dotnetcore-console-up-v2
 ---
+
 # .NET Core Console application letting users sign-in with Username/password to call Microsoft Graph API
 
 [![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnetcore-console-up-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=693)
