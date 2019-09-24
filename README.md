@@ -6,7 +6,7 @@ languages:
 products:
 - azure
 description: "This sample demonstrates how to use MSAL.NET to authenticate the user silently using username and password and call to a web API (in this case, the Microsoft Graph)"
-urlFragment: active-directory-dotnetcore-console-up-v2
+urlFragment: aad-username-password-graph
 ---
 
 # .NET Core Console application letting users sign-in with Username/password to call Microsoft Graph API
