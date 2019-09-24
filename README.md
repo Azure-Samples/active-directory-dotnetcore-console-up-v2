@@ -4,7 +4,7 @@ languages:
 - csharp
 - powershell
 products:
-- azure
+- azure-active-directory
 description: "This sample demonstrates how to use MSAL.NET to authenticate the user silently using username and password and call to a web API (in this case, the Microsoft Graph)"
 urlFragment: aad-username-password-graph
 ---
