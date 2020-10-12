@@ -38,7 +38,7 @@ namespace up_console
         {
             tokenAcquisitionHelper = new PublicAppUsingUsernamePassword(app);
             protectedApiCallHelper = new ProtectedApiCallHelper(client);
-            this.MicrosoftGraphBaseEndpoint = microsoftGraphBaseEndpoint;
+            MicrosoftGraphBaseEndpoint = microsoftGraphBaseEndpoint;
         }
 
         protected PublicAppUsingUsernamePassword tokenAcquisitionHelper;
