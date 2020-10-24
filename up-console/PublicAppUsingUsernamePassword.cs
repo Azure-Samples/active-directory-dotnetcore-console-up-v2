@@ -98,13 +98,14 @@ namespace up_console
             }
             catch (MsalUiRequiredException ex)
             {
+                Console.WriteLine("Error: {0}", ex.Message);
                 // Here are the kind of error messages you could have, and possible mitigations
 
                 // ------------------------------------------------------------------------
                 // MsalUiRequiredException: 'AADSTS50055: Password is expired.
                 // error:invalid_grant
                 // suberror:user_password_expired
-                // Mitigation: you need to have the user change their password fisrt. This
+                // Mitigation: you need to have the user change their password first. This
                 // requires an interaction with Azure AD, which is not possible with the username/password flow)
                 // if you are not using .NET Core (which does not have any Web UI) by calling (once only) AcquireTokenAsync interactive. 
                 // remember that Username/password is for public client applications that is desktop/mobile applications.
