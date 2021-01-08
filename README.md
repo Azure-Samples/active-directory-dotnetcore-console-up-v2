@@ -213,7 +213,7 @@ For more information, see MSAL.NET's conceptual documentation:
 - [Scenarios](https://aka.ms/msal-net-scenarios)
 - [Acquiring Tokens](https://aka.ms/msal-net-acquiring-tokens)
 - [Username/password](https://aka.ms/msal-net-up)
-- [Microsoft identity platform and the OAuth 2.0 resource owner password credential](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth-ropc) to learn more about the underlying protocol
+- [Microsoft identity platform and the OAuth 2.0 resource owner password credential](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth-ropc) to learn more about the underlying protocol
 - [Resource owner password credentials RFC](https://tools.ietf.org/html/rfc6749#section-1.3.3)
 
 For more information about the Microsoft identity platform see:
