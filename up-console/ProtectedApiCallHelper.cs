@@ -31,7 +31,7 @@ namespace up_console
         /// <summary>
         /// Calls the protected web API and processes the result
         /// </summary>
-        /// <param name="webApiUrl">URL of the web API to call (supposed to return Json)</param>
+        /// <param name="webApiUrl">URL of the web API to call (supposed to return JSON)</param>
         /// <param name="accessToken">Access token used as a bearer security token to call the web API</param>
         /// <param name="processResult">Callback used to process the result of the call to the web API</param>
         public async Task CallWebApiAndProcessResultAsync(string webApiUrl, string accessToken, Action<JObject> processResult)

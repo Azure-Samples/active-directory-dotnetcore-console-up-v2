@@ -10,7 +10,7 @@ namespace up_console
 {
     /// <summary>
     /// This sample signs-in the user signed-in with its username and password.
-    /// It's there fore completeness, but this approach is not recommended;
+    /// It's there for completeness, but this approach is not recommended;
     /// For more information see https://aka.ms/msal-net-up
     /// </summary>
     class Program
