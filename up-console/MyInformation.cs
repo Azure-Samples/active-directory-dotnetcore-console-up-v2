@@ -92,7 +92,7 @@ namespace up_console
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Enter your password (no backspace possible)");
             Console.ResetColor();
-            string password = String.Empty;
+            string password = string.Empty;
             while (true)
             {
                 ConsoleKeyInfo c = Console.ReadKey(true);
