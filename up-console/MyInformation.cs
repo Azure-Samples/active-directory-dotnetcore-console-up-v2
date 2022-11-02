@@ -67,7 +67,7 @@ namespace up_console
         private async Task DisplayMeAndMyManagerAsync()
         {
             string username = ReadUsername();
-            SecureString password = ReadPassword();
+            string password = ReadPassword();
 
             AuthenticationResult authenticationResult = await tokenAcquisitionHelper.AcquireATokenFromCacheOrUsernamePasswordAsync(Scopes, username, password);
             if (authenticationResult != null)
@@ -87,12 +87,12 @@ namespace up_console
             Console.ResetColor();
         }
 
-        private static SecureString ReadPassword()
+        private static string ReadPassword()
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Enter your password (no backspace possible)");
             Console.ResetColor();
-            SecureString password = new SecureString();
+            string password = String.Empty;
             while (true)
             {
                 ConsoleKeyInfo c = Console.ReadKey(true);
@@ -100,7 +100,7 @@ namespace up_console
                 {
                     break;
                 }
-                password.AppendChar(c.KeyChar);
+                password += c.KeyChar;
                 Console.Write("*");
             }
             Console.WriteLine();
