@@ -34,7 +34,7 @@ namespace up_console
         /// Acquires a token from the token cache, or Username/password
         /// </summary>
         /// <returns>An AuthenticationResult if the user successfully signed-in, or otherwise <c>null</c></returns>
-        public async Task<AuthenticationResult> AcquireATokenFromCacheOrUsernamePasswordAsync(IEnumerable<String> scopes, string username, SecureString password)
+        public async Task<AuthenticationResult> AcquireATokenFromCacheOrUsernamePasswordAsync(IEnumerable<String> scopes, string username, string password)
         {
             AuthenticationResult result = null;
             var accounts = await App.GetAccountsAsync();
@@ -67,7 +67,7 @@ namespace up_console
         /// who is signed-in Windows (for a domain joined or AAD joined machine)
         /// </summary>
         /// <returns>An authentication result, or null if the user canceled sign-in</returns>
-        private async Task<AuthenticationResult> GetTokenForWebApiUsingUsernamePasswordAsync(IEnumerable<string> scopes, string username, SecureString password)
+        private async Task<AuthenticationResult> GetTokenForWebApiUsingUsernamePasswordAsync(IEnumerable<string> scopes, string username, string password)
         {
             AuthenticationResult result = null;
             try
