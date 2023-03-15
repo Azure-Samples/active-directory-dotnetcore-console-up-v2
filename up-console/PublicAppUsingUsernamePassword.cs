@@ -20,7 +20,6 @@ namespace up_console
         /// Constructor of a public application leveraging username passwords to acquire a token
         /// </summary>
         /// <param name="app">MSAL.NET Public client application</param>
-        /// <param name="httpClient">HttpClient used to call the protected Web API</param>
         /// <remarks>
         /// For more information see https://aka.ms/msal-net-up
         /// </remarks>
@@ -28,6 +27,10 @@ namespace up_console
         {
             App = app;
         }
+
+        /// <summary>
+        /// IPublicClientApplication
+        /// </summary>
         protected IPublicClientApplication App { get; private set; }
 
         /// <summary>
@@ -37,7 +40,7 @@ namespace up_console
         public async Task<AuthenticationResult> AcquireATokenFromCacheOrUsernamePasswordAsync(IEnumerable<String> scopes, string username, string password)
         {
             AuthenticationResult result = null;
-            var accounts = await App.GetAccountsAsync();
+            var accounts = await App.GetAccountsAsync().ConfigureAwait(false);
 
             if (accounts.Any())
             {
@@ -45,7 +48,7 @@ namespace up_console
                 {
                     // Attempt to get a token from the cache (or refresh it silently if needed)
                     result = await (App as PublicClientApplication).AcquireTokenSilent(scopes, accounts.FirstOrDefault())
-                        .ExecuteAsync();
+                        .ExecuteAsync().ConfigureAwait(false);
                 }
                 catch (MsalUiRequiredException)
                 {
@@ -56,7 +59,7 @@ namespace up_console
             // Cache empty or no token for account in the cache, attempt by username/password
             if (result == null)
             {
-                result = await GetTokenForWebApiUsingUsernamePasswordAsync(scopes, username, password);
+                result = await GetTokenForWebApiUsingUsernamePasswordAsync(scopes, username, password).ConfigureAwait(false);
             }
 
             return result;
@@ -73,7 +76,7 @@ namespace up_console
             try
             {
                 result = await App.AcquireTokenByUsernamePassword(scopes, username, password)
-                    .ExecuteAsync();
+                    .ExecuteAsync().ConfigureAwait(false);
             }
             catch (MsalUiRequiredException ex)
             {
