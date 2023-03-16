@@ -11,8 +11,17 @@ using System.Threading.Tasks;
 
 namespace up_console
 {
+    /// <summary>
+    /// MyInformation
+    /// </summary>
     public class MyInformation
     {
+        /// <summary>
+        /// MyInformation ctor
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="client"></param>
+        /// <param name="microsoftGraphBaseEndpoint"></param>
         public MyInformation(IPublicClientApplication app, HttpClient client, string microsoftGraphBaseEndpoint)
         {
             tokenAcquisitionHelper = new PublicAppUsingUsernamePassword(app);
@@ -20,8 +29,14 @@ namespace up_console
             MicrosoftGraphBaseEndpoint = microsoftGraphBaseEndpoint;
         }
 
+        /// <summary>
+        /// tokenAcquisitionHelper
+        /// </summary>
         protected PublicAppUsingUsernamePassword tokenAcquisitionHelper;
 
+        /// <summary>
+        /// protectedApiCallHelper
+        /// </summary>
         protected ProtectedApiCallHelper protectedApiCallHelper;
 
         /// <summary>
@@ -40,7 +55,6 @@ namespace up_console
         private string WebApiUrlMe { get { return $"{MicrosoftGraphBaseEndpoint}/v1.0/me"; } }
         private string WebApiUrlMyManager { get { return $"{MicrosoftGraphBaseEndpoint}/v1.0/me/manager"; } }
 
-
         /// <summary>
         /// Calls the Web API and displays its information
         /// </summary>
@@ -53,7 +67,7 @@ namespace up_console
                 again = false;
                 try
                 {
-                    await DisplayMeAndMyManagerAsync();
+                    await DisplayMeAndMyManagerAsync().ConfigureAwait(false);
                 }
                 catch (ArgumentException ex) when (ex.Message.StartsWith("U/P"))
                 {
@@ -69,14 +83,14 @@ namespace up_console
             string username = ReadUsername();
             string password = ReadPassword();
 
-            AuthenticationResult authenticationResult = await tokenAcquisitionHelper.AcquireATokenFromCacheOrUsernamePasswordAsync(Scopes, username, password);
+            AuthenticationResult authenticationResult = await tokenAcquisitionHelper.AcquireATokenFromCacheOrUsernamePasswordAsync(Scopes, username, password).ConfigureAwait(false);
             if (authenticationResult != null)
             {
                 DisplaySignedInAccount(authenticationResult.Account);
 
                 string accessToken = authenticationResult.AccessToken;
-                await CallWebApiAndDisplayResultAsync(WebApiUrlMe, accessToken, "Me");
-                await CallWebApiAndDisplayResultAsync(WebApiUrlMyManager, accessToken, "My manager");
+                await CallWebApiAndDisplayResultAsync(WebApiUrlMe, accessToken, "Me").ConfigureAwait(false);
+                await CallWebApiAndDisplayResultAsync(WebApiUrlMyManager, accessToken, "My manager").ConfigureAwait(false);
             }
         }
 
@@ -128,7 +142,7 @@ namespace up_console
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(title);
             Console.ResetColor();
-            await protectedApiCallHelper.CallWebApiAndProcessResultAsync(url, accessToken, Display);
+            await protectedApiCallHelper.CallWebApiAndProcessResultAsync(url, accessToken, Display).ConfigureAwait(false);
             Console.WriteLine();
         }
 

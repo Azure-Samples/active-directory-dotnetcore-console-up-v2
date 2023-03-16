@@ -40,7 +40,7 @@ namespace up_console
             var httpClient = new HttpClient();
 
             MyInformation myInformation = new MyInformation(app, httpClient, config.MicrosoftGraphBaseEndpoint);
-            await myInformation.DisplayMeAndMyManagerRetryingWhenWrongCredentialsAsync();
+            await myInformation.DisplayMeAndMyManagerRetryingWhenWrongCredentialsAsync().ConfigureAwait(false);
         }
     }
 }
