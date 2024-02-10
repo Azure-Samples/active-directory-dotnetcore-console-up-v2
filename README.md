@@ -4,14 +4,14 @@ languages:
 - csharp
 - powershell
 products:
-- azure-active-directory
+- microsoft-entra-id
 description: "This sample demonstrates how to use MSAL.NET to authenticate the user silently using username and password and call to a web API (in this case, the Microsoft Graph)"
-urlFragment: aad-username-password-graph
+urlFragment: Microsoft Entra ID-username-password-graph
 ---
 
 # .NET Core Console application letting users sign-in with Username/password to call Microsoft Graph API
 
-[![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnetcore-console-up-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=693)
+[![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/aad%20Samples/.NET%20client%20samples/active-directory-dotnetcore-console-up-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=693)
 
 > We have renamed the default branch to main. To rename your local repo follow the directions [here](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/renaming-a-branch#updating-a-local-clone-after-a-branch-name-changes).
 
@@ -37,17 +37,17 @@ Note that Username/Password is needed in some cases (for instance DevOps scenari
 - This requires having credentials in the application, which does not happen with the other flows.
 - The credentials should only be used when there is a high degree of trust between the resource owner and the client and when other authorization grant types are not
    available (such as an authorization code).
-- Do note that this attempts to authenticate and obtain tokens for users using this flow will often fail with applications registered with Azure AD. Some of the situations and scenarios that will cause the failure are listed below  
+- Do note that this attempts to authenticate and obtain tokens for users using this flow will often fail with applications registered with Microsoft Entra ID. Some of the situations and scenarios that will cause the failure are listed below  
   - When the user needs to consent to permissions that this application is requesting.
   - When a conditional access policy enforcing multi-factor authentication is in force.
-  - Azure AD Identity Protection can block authentication attempts if this user account is compromised.
+  - Microsoft Entra ID Protection can block authentication attempts if this user account is compromised.
   - The user's password is expired and requires a reset.
 
 while this flow seems simpler than the others, applications using these flows often encounter more problems as compared to other flows like authorization code grant. The error handling is also quiet complex (detailed in the sample)
 
-The modern authentication protocols (SAML, WS-Fed, OAuth and OpenID), in principal, discourages apps from handling user credentials themselves. The aim is to decouple the authentication method from an app. Azure AD controls the login experience to avoid exposing secrets (like passwords) to a website or an app.
+The modern authentication protocols (SAML, WS-Fed, OAuth and OpenID), in principal, discourages apps from handling user credentials themselves. The aim is to decouple the authentication method from an app. Microsoft Entra ID controls the login experience to avoid exposing secrets (like passwords) to a website or an app.
 
-This enables IdPs like Azure AD to provide seamless single sign-on experiences, enable users to authenticate using factors other than passwords (phone, face, biometrics) and Azure AD can block or elevate authentication attempts if it discerns that the user’s account is compromised or the user is trying to access an app from an untrusted location and such.
+This enables IdPs like Microsoft Entra ID to provide seamless single sign-on experiences, enable users to authenticate using factors other than passwords (phone, face, biometrics) and Microsoft Entra ID can block or elevate authentication attempts if it discerns that the user’s account is compromised or the user is trying to access an app from an untrusted location and such.
 
 - Developers who wish to gain good familiarity of programming for Microsoft Graph are advised to go through the [An introduction to Microsoft Graph for developers](https://www.youtube.com/watch?v=EBbnpFdB92A) recorded session. 
 
@@ -60,8 +60,8 @@ To run this sample, you'll need:
 - A Windows machine (necessary if you want to run the app on Windows)
 - An OS X machine (necessary if you want to run the app on Mac)
 - A Linux machine (necessary if you want to run the app on Linux)
-- An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/documentation/articles/active-directory-howto-tenant/)
-- A user account in your Azure AD tenant. This sample will not work with a Microsoft account (formerly Windows Live account). Therefore, if you signed in to the [Azure portal](https://portal.azure.com) with a Microsoft account and have never created a user account in your directory before, you need to do that now.
+- a Microsoft Entra tenant. For more information on how to get a Microsoft Entra tenant, see [How to get a Microsoft Entra tenant](https://azure.microsoft.com/documentation/articles/active-directory-howto-tenant/)
+- A user account in your Microsoft Entra tenant. This sample will not work with a Microsoft account (formerly Windows Live account). Therefore, if you signed in to the [Microsoft Entra admin center](https://entra.microsoft.com) with a Microsoft account and have never created a user account in your directory before, you need to do that now.
 
 ### Step 1: Clone or download this repository
 
@@ -76,17 +76,17 @@ or download and extract the repository .zip file.
 
 #### Operating the sample
 
-When you run the sample, if you are running on a domain joined or AAD joined Windows machine, it will display your information as well as the information about your manager.
+When you run the sample, if you are running on a domain joined or Microsoft Entra joined Windows machine, it will display your information as well as the information about your manager.
 
-### Step 2: (Optional) Register the sample with your Azure Active Directory tenant
+### Step 2: (Optional) Register the sample with your Microsoft Entra tenant
 
 The instructions so far used the sample is for an app in a Microsoft test tenant: given that the app is multi-tenant, anybody can run the sample against this app entry.
 
 There is one project in this sample. To register it, you can:
 
-- either follow the steps [Step 2: Register the sample with your Azure Active Directory tenant](#step-2-register-the-sample-with-your-azure-active-directory-tenant) and [Step 3:  Configure the sample to use your Azure AD tenant](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
+- either follow the steps [Step 2: Register the sample with your Microsoft Entra tenant](#step-2-register-the-sample-with-your-azure-active-directory-tenant) and [Step 3:  Configure the sample to use your Microsoft Entra tenant](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
 - or use PowerShell scripts that:
-  - **automatically** creates the Azure AD applications and related objects (passwords, permissions, dependencies) for you. Note that this works for Visual Studio only.
+  - **automatically** creates the Microsoft Entra applications and related objects (passwords, permissions, dependencies) for you. Note that this works for Visual Studio only.
   - modify the Visual Studio projects' configuration files.
 
 <details>
@@ -99,7 +99,7 @@ There is one project in this sample. To register it, you can:
    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
    ```
 
-1. Run the script to create your Azure AD application and configure the code of the sample application accordingly.
+1. Run the script to create your Microsoft Entra application and configure the code of the sample application accordingly.
 1. In PowerShell run:
 
    ```PowerShell
@@ -116,13 +116,13 @@ There is one project in this sample. To register it, you can:
 
 Follow the steps below to manually walk through the steps to register and configure the applications.
 
-#### Choose the Azure AD tenant where you want to create your applications
+#### Choose the Microsoft Entra tenant where you want to create your applications
 
 As a first step you'll need to:
 
-1. Sign in to the [Azure portal](https://portal.azure.com) using either a work or school account or a personal Microsoft account.
-1. If your account is present in more than one Azure AD tenant, select your profile at the top right corner in the menu on top of the page, and then **switch directory**.
-   Change your portal session to the desired Azure AD tenant.
+1. Sign in to the [Microsoft Entra admin center](https://entra.microsoft.com) using either a work or school account or a personal Microsoft account.
+1. If your account is present in more than one Microsoft Entra tenant, select your profile at the top right corner in the menu on top of the page, and then **switch directory**.
+   Change your portal session to the desired Microsoft Entra tenant.
 
 #### Register the client app (up-console)
 
@@ -147,7 +147,7 @@ As a first step you'll need to:
    Click the **Grant admin consent for {tenant}** button, and then select **Yes** when you are asked if you want to grant consent for the
    requested permissions for all account in the tenant.You need to be an the tenant admin to be able to carry out this operation.
 
-### Step 3:  Configure the sample to use your Azure AD tenant
+### Step 3:  Configure the sample to use your Microsoft Entra tenant
 
 #### Configure the client project
 
@@ -155,7 +155,7 @@ Open the project in your IDE (like Visual Studio) to configure the code.
 >In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 
 1. Open the `up-console\appsettings.json` file
-1. Find the app key `ClientId` and replace the existing value with the application ID (clientId) of the `up-console` application copied from the Azure portal.
+1. Find the app key `ClientId` and replace the existing value with the application ID (clientId) of the `up-console` application copied from the Microsoft Entra admin center.
 
 ### Step 4: Run the sample
 
